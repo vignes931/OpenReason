@@ -1,0 +1,185 @@
+{
+    "reasoning_rules": {
+        "math": {
+            "name": "MATH",
+            "rule": "Output only numeric result. Do not explain.",
+            "structure": "single_number",
+            "max_words": 3,
+            "forbidden_patterns": [
+                "because",
+                "therefore",
+                "let me explain",
+                "reasoning",
+                "step"
+            ],
+            "required_elements": [
+                "numeric_answer"
+            ],
+            "scoring_priority": "accuracy"
+        },
+        "factual": {
+            "name": "FACTUAL",
+            "rule": "Return one factual sentence or numeric constant.",
+            "structure": "statement",
+            "max_words": 20,
+            "forbidden_patterns": [
+                "reasoning",
+                "analysis",
+                "let me",
+                "first"
+            ],
+            "required_elements": [
+                "fact"
+            ],
+            "scoring_priority": "accuracy"
+        },
+        "logic": {
+            "name": "LOGIC",
+            "rule": "Use Premise → Inference → Conclusion structure.",
+            "structure": "premise_inference_conclusion",
+            "max_words": 150,
+            "forbidden_patterns": [
+                "maybe",
+                "possibly",
+                "i think"
+            ],
+            "required_elements": [
+                "premise",
+                "inference",
+                "conclusion"
+            ],
+            "scoring_priority": "structure"
+        },
+        "ethics": {
+            "name": "ETHICS",
+            "rule": "Identify moral frameworks before judging.",
+            "structure": "framework_analysis",
+            "max_words": 300,
+            "forbidden_patterns": [
+                "definitely should",
+                "must",
+                "always",
+                "never"
+            ],
+            "required_elements": [
+                "utilitarian",
+                "deontological",
+                "complexity"
+            ],
+            "scoring_priority": "compliance"
+        },
+        "causal": {
+            "name": "CAUSAL",
+            "rule": "Explain mechanism linking cause and effect.",
+            "structure": "cause_mechanism_effect",
+            "max_words": 200,
+            "forbidden_patterns": [
+                "vague",
+                "unclear",
+                "might"
+            ],
+            "required_elements": [
+                "cause",
+                "mechanism",
+                "effect"
+            ],
+            "scoring_priority": "structure"
+        },
+        "creative": {
+            "name": "CREATIVE",
+            "rule": "Highlight novelty clearly.",
+            "structure": "concept_novelty_grounding",
+            "max_words": 250,
+            "forbidden_patterns": [
+                "existing",
+                "traditional",
+                "common"
+            ],
+            "required_elements": [
+                "novelty",
+                "grounding"
+            ],
+            "scoring_priority": "compliance"
+        },
+        "empathetic": {
+            "name": "EMPATHETIC",
+            "rule": "Infer emotion, stay tentative.",
+            "structure": "emotion_context_inference",
+            "max_words": 150,
+            "forbidden_patterns": [
+                "definitely",
+                "certainly",
+                "obviously"
+            ],
+            "required_elements": [
+                "emotion",
+                "might",
+                "could"
+            ],
+            "scoring_priority": "structure"
+        },
+        "riddle": {
+            "name": "RIDDLE",
+            "rule": "State reasoning pattern + answer.",
+            "structure": "pattern_answer",
+            "max_words": 100,
+            "forbidden_patterns": [
+                "guess",
+                "random"
+            ],
+            "required_elements": [
+                "pattern",
+                "answer"
+            ],
+            "scoring_priority": "accuracy"
+        },
+        "analytical": {
+            "name": "ANALYTICAL",
+            "rule": "Present balanced comparison without bias.",
+            "structure": "comparison",
+            "max_words": 300,
+            "forbidden_patterns": [
+                "clearly better",
+                "obviously superior",
+                "undoubtedly"
+            ],
+            "required_elements": [
+                "advantages",
+                "disadvantages",
+                "balance"
+            ],
+            "scoring_priority": "compliance"
+        }
+    },
+    "mode_budgets": {
+        "reflex": {
+            "max_tokens": 512,
+            "max_llm_calls": 1,
+            "timeout_ms": 500,
+            "reflection_passes": 0,
+            "perspective_count": 0,
+            "reasoning_depth": "none"
+        },
+        "analytic": {
+            "max_tokens": 2048,
+            "max_llm_calls": 2,
+            "timeout_ms": 3000,
+            "reflection_passes": 1,
+            "perspective_count": 2,
+            "reasoning_depth": "single_path"
+        },
+        "reflective": {
+            "max_tokens": 8192,
+            "max_llm_calls": 5,
+            "timeout_ms": 15000,
+            "reflection_passes": 3,
+            "perspective_count": 6,
+            "reasoning_depth": "multi_path"
+        }
+    },
+    "complexity_thresholds": {
+        "reflex_max": 0.25,
+        "analytic_max": 0.65,
+        "reflective_min": 0.65
+    }
+}

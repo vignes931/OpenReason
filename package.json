@@ -1,0 +1,72 @@
+{
+    "name": "openreason",
+    "version": "2.0.0",
+    "description": "Formal Reasoning Engine - Multi-Domain Cognitive System with Specialized Solvers (Math, Logic, Causal, Ethics, Meta, Identity) + Unified Reasoning Graph + Reflexive Self-Audit",
+    "keywords": [
+        "ai",
+        "reasoning",
+        "llm",
+        "constitutional-ai",
+        "langchain",
+        "cognitive-architecture",
+        "semantic-evaluation",
+        "precision-core",
+        "reasoning-compression"
+    ],
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.cjs"
+        },
+        "./core": {
+            "types": "./dist/core/index.d.ts",
+            "import": "./dist/core/index.mjs",
+            "require": "./dist/core/index.cjs"
+        }
+    },
+    "bin": {
+        "reasoner": "dist/cli.js"
+    },
+    "files": [
+        "dist",
+        "README.md",
+        "LICENSE"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/CaviraOSS/OpenReason.git"
+    },
+    "license": "Apache-2.0",
+    "author": "nullure",
+    "homepage": "https://github.com/CaviraOSS/OpenReason#readme",
+    "scripts": {
+        "start": "tsx src/index.ts",
+        "build": "tsc -p tsconfig.json",
+        "prepublishOnly": "npm run build",
+        "test": "tsx tests/math.test.ts && tsx tests/logic.test.ts && tsx tests/evolution.test.ts && tsx tests/reason.test.ts",
+        "bench": "tsx reasonbench/runner.ts"
+    },
+    "dependencies": {
+        "@anthropic-ai/sdk": "^0.68.0",
+        "@keyv/sqlite": "^4.0.6",
+        "@langchain/anthropic": "^1.0.1",
+        "@langchain/community": "^1.0.3",
+        "@langchain/core": "^1.0.5",
+        "@langchain/google-genai": "^1.0.1",
+        "@langchain/langgraph": "^1.0.2",
+        "@langchain/openai": "^1.1.1",
+        "dotenv": "^17.2.3",
+        "keyv": "^5.5.4",
+        "langchain": "^1.0.4"
+    },
+    "devDependencies": {
+        "ts-node": "^10.9.2",
+        "tsx": "^4.20.6",
+        "typescript": "^5.9.3"
+    }
+}

@@ -1,0 +1,44 @@
+# Source and development files
+src/
+tests/
+temp/
+*.backup
+
+# Config and dev files
+tsconfig.json
+.editorconfig
+.vscode/
+.idea/
+
+# Documentation (only README is included)
+architecture.md
+CONTRIBUTING.md
+CODE_OF_CONDUCT.md
+SECURITY.md
+
+# Git and CI
+.git/
+.gitignore
+.gitattributes
+.github/
+
+# Test files
+*.test.ts
+*.spec.ts
+coverage/
+
+# Build artifacts
+node_modules/
+*.log
+
+# Environment
+.env
+.env.example
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Data
+data/
+public/
