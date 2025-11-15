@@ -8,10 +8,6 @@ import { log_info } from "../utils/logger"
 import { unified_quality } from "../utils/metrics"
 import { similarity } from "../../utils/similarity"
 import { vectorize } from "../../utils/vectorize"
-import { solveMath } from "../../engines/math"
-import { assessLogic } from "../../engines/logic"
-import { reasonEthics } from "../../engines/ethics"
-import { analyzeCausal } from "../../engines/causal"
 import { classify_query } from "./classifier"
 import { detect_structure } from "../utils/structure"
 import { decompose_problem } from "./decompose"
@@ -23,6 +19,8 @@ import { verify_math_reasoning, verify_logic_consistency } from "../verification
 import { repair_reasoning, RepairInstruction } from "../verification/repair"
 import { unify_steps } from "../utils/unify"
 import { finalize_reasoning } from "./finalizer"
+import { depth_to_mode, quick_respond } from "./shared"
+import { reason_with_langgraph } from "./langgraph"
 
 export type reasoning_result = {
     verdict: string
@@ -36,34 +34,7 @@ export type reasoning_result = {
     metadata?: any
 }
 
-const depth_to_mode = (depth: number): mode => {
-    if (depth <= 1) return "reflex"
-    if (depth === 2) return "analytic"
-    return "reflective"
-}
-
-const quick_respond = async (query: string, cfg: openreason_config, detectedDomain: domain): Promise<string> => {
-    let det: string | null = null
-    if (detectedDomain === "math") det = solveMath(query)
-    else if (detectedDomain === "logic") det = assessLogic(query)
-    else if (detectedDomain === "ethics") det = reasonEthics(query)
-    else if (detectedDomain === "causal") det = analyzeCausal(query)
-
-    if (det) {
-        return det
-    }
-
-    const prompt = `Answer the following question in one or two sentences with no intermediate reasoning unless absolutely necessary:\n${query}`
-    return invoke_provider(
-        prompt,
-        cfg.provider,
-        cfg.apiKey,
-        cfg.simpleModel ?? cfg.model,
-        cfg.performance?.timeout || 20000
-    )
-}
-
-export const reason = async (query: string, cfg: openreason_config): Promise<reasoning_result> => {
+const standard_reason = async (query: string, cfg: openreason_config): Promise<reasoning_result> => {
     const start = Date.now()
 
     const classification = classify_query(query)
@@ -229,4 +200,15 @@ export const reason = async (query: string, cfg: openreason_config): Promise<rea
     log_info(`[REASON] pipeline complete - confidence=${result.confidence.toFixed(2)}, latency=${latency}ms, retries=${retries}`)
 
     return result
+}
+
+export const reason = async (query: string, cfg: openreason_config): Promise<reasoning_result> => {
+    if (cfg.graph?.enabled) {
+        const graphResult = await reason_with_langgraph(query, cfg)
+        if (graphResult) {
+            return graphResult
+        }
+        log_info("[REASON] LangGraph execution unavailable, falling back to linear pipeline")
+    }
+    return standard_reason(query, cfg)
 }

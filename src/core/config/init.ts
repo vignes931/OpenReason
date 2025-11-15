@@ -20,12 +20,18 @@ export type openreason_config = {
         maxRetries?: number
         timeout?: number
     }
+    graph?: {
+        enabled: boolean
+        checkpoint?: boolean
+        threadPrefix?: string
+    }
 }
 
 let cfg: openreason_config = {
     provider: "openai",
     apiKey: "",
-    model: "gpt-4o"
+    model: "gpt-4o",
+    graph: { enabled: false }
 }
 
 let explicitInit = false
@@ -37,7 +43,8 @@ export const init = (config: openreason_config) => {
         simpleModel: config.simpleModel || config.model,
         complexModel: config.complexModel || config.model,
         memory: config.memory || { enabled: false, path: "./data/memory.db" },
-        performance: config.performance || { maxRetries: 3, timeout: 30000 }
+        performance: config.performance || { maxRetries: 3, timeout: 30000 },
+        graph: config.graph || { enabled: false }
     }
     if (cfg.memory?.enabled) {
         Promise.resolve(load_memory(cfg.memory.path)).catch(() => { })

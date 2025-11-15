@@ -180,6 +180,16 @@ const mock_response = (prompt: string): string => {
         ].join("\n")
     }
 
+    if (domain === "logic" && /socrates/i.test(lowerQ)) {
+        return [
+            "Premise 1: All humans are mortal.",
+            "Premise 2: Socrates is a human.",
+            "Inference: If every human is mortal and Socrates is human, then Socrates inherits the mortal predicate.",
+            "Conclusion: Socrates is mortal.",
+            "Answer: Therefore Socrates is mortal."
+        ].join("\n")
+    }
+
     if (domain === "logic" && /self-modifying|modifies its own reasoning/i.test(lowerQ)) {
         return [
             "Premise: Modification M invalidates justification J that allowed M.",

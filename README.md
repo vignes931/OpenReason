@@ -1,7 +1,7 @@
+# OpenReason
+
 ![OpenReason](https://img.shields.io/npm/v/openreason)
 ![License](https://img.shields.io/badge/license-Apache--2.0-blue)
-
-# OpenReason
 
 OpenReason is a reasoning engine that sits on top of any LLM provider.  
 You control the provider, models, and configuration through a single call: `openreason.init()`.
@@ -38,6 +38,7 @@ It handles math, logic, philosophy, ethics, and general reasoning without hiding
 - [18. Troubleshooting](#18-troubleshooting)
 - [19. FAQ](#19-faq)
 - [20. Roadmap](#20-roadmap)
+- [21. LangGraph mode](#21-langgraph-mode)
 
 </details>
 
@@ -182,6 +183,12 @@ openreason.init({
     compliance: 0.3,
     reflection: 0.2,
   },
+
+  graph: {
+    enabled: true, // route through LangGraph orchestration
+    checkpoint: false,
+    threadPrefix: "bench", // optional namespace for checkpointer
+  },
 });
 ```
 
@@ -190,6 +197,7 @@ Notes:
 - You don’t need .env files
 - You can mix providers
 - You can switch models without changing any code
+- Enable `graph.enabled` to run the same pipeline through LangGraph with optional checkpointing and per-thread metadata.
 
 ---
 
@@ -539,6 +547,34 @@ Yes. Look inside `public/prompt.json`.
 - Provider-level ensemble reasoning
 - Distributed memory
 - Micro-batch support
+
+---
+
+# 21. LangGraph mode
+
+OpenReason can run the exact same classifier → skeleton → solver → verifier → finalizer flow through a LangGraph `StateGraph`. This mode is optional and opt-in via `graph.enabled`.
+
+```ts
+openreason.init({
+  provider: "openai",
+  apiKey: process.env.OPENAI_API_KEY!,
+  model: "gpt-4o",
+  graph: {
+    enabled: true,
+    checkpoint: true, // uses MemorySaver from @langchain/langgraph-checkpoint
+    threadPrefix: "demo", // helps group runs when checkpointing is on
+  },
+});
+```
+
+What changes:
+
+- Nodes mirror the standard pipeline (classify, cache, quick reflex, structure, solve, evaluate) but execute as a compiled LangGraph.
+- When `checkpoint` is true, the built-in `MemorySaver` tracks progress per `threadPrefix`, letting you resume or inspect state.
+- If anything fails or graph execution is disabled, OpenReason falls back to the linear pipeline automatically.
+- All existing telemetry (memory cache, prompt evolution, verification metadata) remains intact, so no code changes are required when toggling the mode.
+
+Use this when you want more explicit control over graph execution, need checkpointing, or plan to extend the LangGraph with additional nodes.
 
 ---
 
