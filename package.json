@@ -1,6 +1,6 @@
 {
     "name": "openreason",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "Formal Reasoning Engine - Multi-Domain Cognitive System with Specialized Solvers (Math, Logic, Causal, Ethics, Meta, Identity) + Unified Reasoning Graph + Reflexive Self-Audit",
     "keywords": [
         "ai",
