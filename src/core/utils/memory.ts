@@ -1,4 +1,4 @@
-import { vectorize } from "../utils/vectorize"
+import { vectorize } from "../../utils/vectorize"
 import Keyv from "keyv"
 import KeyvSqlite from "@keyv/sqlite"
 
@@ -17,7 +17,7 @@ let memory_store: trace[] = []
 let memory_path = "./data/memory.db"
 let keyv: Keyv<any> | null = null
 
-export const loadMemory = async (path: string) => {
+export const load_memory = async (path: string) => {
     memory_path = path
     const uri = `sqlite://${path}`
     keyv = new Keyv({ store: new KeyvSqlite({ uri }) })

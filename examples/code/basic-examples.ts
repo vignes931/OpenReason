@@ -1,80 +1,49 @@
 import openreason from "openreason";
 
-// initialize openreason
+const apiKey = process.env.OPENAI_API_KEY;
+
+if (!apiKey) {
+    throw new Error("Set OPENAI_API_KEY before running the basic examples.");
+}
+
 openreason.init({
     provider: "openai",
-    apiKey: process.env.OPENAI_API_KEY!,
+    apiKey,
     model: "gpt-4o",
     simpleModel: "gpt-4o-mini",
+    complexModel: "gpt-4o",
+    memory: { enabled: true, path: "./data/examples-memory.db" },
+    performance: { maxRetries: 2, timeout: 45000 }
 });
 
 async function examples() {
-    // example 1: simple math (deterministic, 0ms)
-    console.log("\n=== example 1: simple math ===");
+    console.log("\n=== example 1: quick math ===");
     const math = await openreason.reason("what is 144 * 12?");
-    console.log("query:", "what is 144 * 12?");
-    console.log("verdict:", math.verdict);
-    console.log("confidence:", math.confidence);
-    console.log("mode:", math.mode); // reflex
-    console.log("reasoning time:", math.timing?.total_ms || 0, "ms");
+    console.log({ verdict: math.verdict, confidence: math.confidence, mode: math.mode, latency: math.latency });
 
-    // example 2: logical reasoning
-    console.log("\n=== example 2: logical reasoning ===");
-    const logic = await openreason.reason(
-        "if all humans are mortal, and socrates is human, is socrates mortal?"
-    );
-    console.log("query:", "if all humans are mortal...");
-    console.log("verdict:", logic.verdict);
-    console.log("confidence:", logic.confidence);
-    console.log("mode:", logic.mode); // analytic
+    console.log("\n=== example 2: logic chain ===");
+    const logic = await openreason.reason("if all humans are mortal and socrates is human, is socrates mortal?");
+    console.log({ verdict: logic.verdict, confidence: logic.confidence, mode: logic.mode, domain: logic.domain });
 
-    // example 3: factual question
-    console.log("\n=== example 3: factual question ===");
+    console.log("\n=== example 3: factual lookup ===");
     const fact = await openreason.reason("what is the capital of france?");
-    console.log("query:", "what is the capital of france?");
-    console.log("verdict:", fact.verdict);
-    console.log("confidence:", fact.confidence);
-    console.log("mode:", fact.mode); // reflex or analytic
+    console.log({ verdict: fact.verdict, metadata: fact.metadata });
 
-    // example 4: technical explanation
     console.log("\n=== example 4: technical explanation ===");
     const tech = await openreason.reason("explain recursion in programming");
-    console.log("query:", "explain recursion in programming");
-    console.log("verdict:", tech.verdict);
-    console.log("confidence:", tech.confidence);
-    console.log("mode:", tech.mode); // analytic
+    console.log({ verdict: tech.verdict, confidence: tech.confidence, structure: tech.metadata?.structure });
 
-    // example 5: ethical dilemma (complex)
-    console.log("\n=== example 5: ethical dilemma ===");
-    const ethics = await openreason.reason(
-        "is it ethical for ai systems to make life-or-death decisions in autonomous vehicles?"
-    );
-    console.log("query:", "is it ethical for ai systems...");
-    console.log("verdict:", ethics.verdict);
-    console.log("confidence:", ethics.confidence);
-    console.log("mode:", ethics.mode); // reflective
-    console.log("uncertainty:", ethics.uncertainty);
+    console.log("\n=== example 5: ethics prompt ===");
+    const ethics = await openreason.reason("is it ethical for autonomous vehicles to make life-or-death decisions?");
+    console.log({ verdict: ethics.verdict, confidence: ethics.confidence, mode: ethics.mode, violations: ethics.violations });
 
-    // example 6: comparison question
-    console.log("\n=== example 6: comparison ===");
-    const compare = await openreason.reason(
-        "what are the tradeoffs between typescript and javascript?"
-    );
-    console.log("query:", "typescript vs javascript tradeoffs");
-    console.log("verdict:", compare.verdict);
-    console.log("confidence:", compare.confidence);
-    console.log("mode:", compare.mode); // analytic or reflective
+    console.log("\n=== example 6: comparison question ===");
+    const compare = await openreason.reason("what are the tradeoffs between typescript and javascript?");
+    console.log({ verdict: compare.verdict, confidence: compare.confidence, complexity: compare.complexity });
 
-    // example 7: accessing metadata
     console.log("\n=== example 7: metadata inspection ===");
     const meta = await openreason.reason("should we colonize mars?");
-    console.log("query:", "should we colonize mars?");
-    console.log("verdict:", meta.verdict);
-    console.log("mode:", meta.mode);
-    console.log("complexity score:", meta.complexity);
-    console.log("constitutional violations:", meta.violations || 0);
-    console.log("perspectives analyzed:", meta.perspectives?.length || 0);
+    console.log({ verdict: meta.verdict, mode: meta.mode, metadata: meta.metadata });
 }
 
-// run examples
 examples().catch(console.error);

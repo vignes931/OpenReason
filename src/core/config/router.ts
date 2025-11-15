@@ -1,15 +1,18 @@
-import { vectorize } from "../utils/vectorize"
-import { similarity } from "../utils/similarity"
+import { vectorize } from "../../utils/vectorize"
+import { similarity } from "../../utils/similarity"
 
 export type domain = "math" | "logic" | "causal" | "philosophy" | "ethics" | "general"
 export type mode = "reflex" | "analytic" | "reflective"
 
 const domain_patterns: Record<domain, string[]> = {
-    math: ["number", "calculate", "prove", "equation", "theorem", "integral", "derivative", "sum", "multiply"],
-    logic: ["if", "then", "implies", "therefore", "not", "and", "or", "valid", "sound", "entails"],
-    causal: ["cause", "effect", "because", "leads to", "results in", "if would", "counterfactual"],
-    philosophy: ["exist", "consciousness", "identity", "truth", "knowledge", "reality", "being", "essence"],
-    ethics: ["should", "ought", "moral", "ethical", "right", "wrong", "justice", "virtue", "duty"],
+    math: [
+        "number", "calculate", "prove", "equation", "theorem", "integral", "derivative", "sum", "multiply",
+        "matrix", "eigenvalue", "integer", "diophantine", "lambda", "λ", "x⁴", "a²", "b²", "c²", "tr(", "∑", "convergence", "series", "limit", "posterior"
+    ],
+    logic: ["if", "then", "implies", "therefore", "not", "and", "or", "valid", "sound", "entails", "paradox", "self-modifying", "message", "causal"],
+    causal: ["cause", "effect", "because", "leads to", "results in", "if would", "counterfactual", "confounder", "dag"],
+    philosophy: ["exist", "consciousness", "identity", "truth", "knowledge", "reality", "being", "essence", "simulation", "platonism", "original", "unproven"],
+    ethics: ["should", "ought", "moral", "ethical", "right", "wrong", "justice", "virtue", "duty", "alignment", "safeguard", "values", "worth", "trolley"],
     general: []
 }
 
@@ -40,7 +43,6 @@ export const select_mode = (query: string, domain: domain): mode => {
     if (complexity < 0.6 && (domain === "math" || domain === "logic")) {
         return "analytic"
     }
-
     return "reflective"
 }
 

@@ -1,302 +1,332 @@
 [
-    {
-        "id":  "s001",
-        "title":  "paradox resolution",
-        "system":  "before answering, work step-by-step: 1) UNDERSTAND the paradox. 2) ANALYZE premises. 3) REASON through implications. 4) SYNTHESIZE consistent resolution. 5) CONCLUDE clearly. now answer: resolve a self-referential sentence without violating logic."
-    },
-    {
-        "id":  "s002",
-        "title":  "conditional logic chain",
-        "system":  "before answering, work step-by-step: 1) UNDERSTAND. 2) ANALYZE. 3) REASON. 4) SYNTHESIZE. 5) CONCLUDE. now answer: determine truth values in a 3-statement dependency where one must be false."
-    },
-    {
-        "id":  "s003",
-        "title":  "bayes update",
-        "system":  "before answering, work step-by-step: 1) UNDERSTAND prior and likelihood. 2) ANALYZE evidence. 3) REASON with bayes. 4) SYNTHESIZE posterior. 5) CONCLUDE. now answer: compute posterior disease risk after two imperfect tests."
-    },
-    {
-        "id":  "s004",
-        "title":  "proof by contradiction",
-        "system":  "before answering, step-by-step. now answer: prove sqrt(2) is irrational; show assumption -\u003e contradiction -\u003e resolution."
-    },
-    {
-        "id":  "s005",
-        "title":  "induction trap",
-        "system":  "before answering, step-by-step. now answer: fix a broken induction proof that \u0027all horses are the same color\u0027 and explain the flaw."
-    },
-    {
-        "id":  "s006",
-        "title":  "algorithm complexity",
-        "system":  "before answering, step-by-step. now answer: derive time complexity of T(n)=3T(n/2)+n log n, justify each term and master-case."
-    },
-    {
-        "id":  "s007",
-        "title":  "graph reachability",
-        "system":  "before answering, step-by-step. now answer: decide if a directed graph with cycles has a path meeting alternating constraints; outline the algorithm and proof idea."
-    },
-    {
-        "id":  "s008",
-        "title":  "counterfactual causality",
-        "system":  "before answering, step-by-step. now answer: analyze whether A caused B in presence of confounder C; propose tests and a decision."
-    },
-    {
-        "id":  "s009",
-        "title":  "trolley ethics",
-        "system":  "before answering, step-by-step. now answer: evaluate trolley variants under utilitarian and deontological lenses; synthesize a policy."
-    },
-    {
-        "id":  "s010",
-        "title":  "sorites resolution",
-        "system":  "before answering, step-by-step. now answer: resolve the heap paradox with a defensible thresholding policy and justify."
-    },
-    {
-        "id":  "s011",
-        "title":  "russell paradox",
-        "system":  "before answering, step-by-step. now answer: explain russell\u0027s set paradox and show a resolution via type or separation principles."
-    },
-    {
-        "id":  "s012",
-        "title":  "quantifier scope",
-        "system":  "before answering, step-by-step. now answer: disambiguate \u0027everyone loves someone\u0027 with predicate logic; enumerate readings and implications."
-    },
-    {
-        "id":  "s013",
-        "title":  "temporal logic bug",
-        "system":  "before answering, step-by-step. now answer: verify a safety property in a finite state machine and fix the counterexample trace."
-    },
-    {
-        "id":  "s014",
-        "title":  "decision theory",
-        "system":  "before answering, step-by-step. now answer: choose under uncertainty with asymmetric loss; construct expected utility and justify."
-    },
-    {
-        "id":  "s015",
-        "title":  "fair division",
-        "system":  "before answering, step-by-step. now answer: allocate 3 items among 2 agents fairly with strategyproofness considerations; explain tradeoffs."
-    },
-    {
-        "id":  "s016",
-        "title":  "infinite series",
-        "system":  "before answering, step-by-step. now answer: test convergence of an alternating series with non-monotone tails; choose the correct test and justify."
-    },
-    {
-        "id":  "s017",
-        "title":  "two-envelope paradox",
-        "system":  "before answering, step-by-step. now answer: resolve the two-envelope paradox coherently and explain expectation pitfalls."
-    },
-    {
-        "id":  "s018",
-        "title":  "geometry construction",
-        "system":  "before answering, step-by-step. now answer: construct a perpendicular bisector with compass-straightedge and prove correctness."
-    },
-    {
-        "id":  "s019",
-        "title":  "matrix eigenvalues",
-        "system":  "before answering, step-by-step. now answer: find eigenvalues of a 3x3 with a repeated root; handle defective case and interpret."
-    },
-    {
-        "id":  "s020",
-        "title":  "recursion invariants",
-        "system":  "before answering, step-by-step. now answer: design a recursive algorithm and specify invariants to prove correctness by induction."
-    },
-    {
-        "id":  "s021",
-        "title":  "counterexample hunt",
-        "system":  "before answering, step-by-step. now answer: given a universal claim on reals, construct a minimal counterexample or prove none exists."
-    },
-    {
-        "id":  "s022",
-        "title":  "nonlinear optimization",
-        "system":  "before answering, step-by-step. now answer: optimize a non-convex function with constraints; compare KKT approach vs heuristic search."
-    },
-    {
-        "id":  "s023",
-        "title":  "causal graphs",
-        "system":  "before answering, step-by-step. now answer: decide identifiability of a causal effect from a DAG; show do-calculus or explain why not."
-    },
-    {
-        "id":  "s024",
-        "title":  "belief revision",
-        "system":  "before answering, step-by-step. now answer: revise a belief set after contradictory evidence using minimal change; show the update."
-    },
-    {
-        "id":  "s025",
-        "title":  "limits of formalism",
-        "system":  "before answering, step-by-step. now answer: explain limits of formal systems for arithmetic and practical implications."
-    },
-    {
-        "id":  "s026",
-        "title":  "quine program",
-        "system":  "before answering, step-by-step. now answer: outline a quine (self-reproducing) program and reason about its structure."
-    },
-    {
-        "id":  "s027",
-        "title":  "ambiguity in language",
-        "system":  "before answering, step-by-step. now answer: enumerate structural vs lexical ambiguities in a sentence and propose disambiguation rules."
-    },
-    {
-        "id":  "s028",
-        "title":  "number theory flaw",
-        "system":  "before answering, step-by-step. now answer: find the flaw in a proof that claims 1=0 via modular arithmetic and correct it."
-    },
-    {
-        "id":  "s029",
-        "title":  "p vs np intuition",
-        "system":  "before answering, step-by-step. now answer: compare classes P and NP with reductions intuition and typical pitfalls."
-    },
-    {
-        "id":  "s030",
-        "title":  "delta-epsilon limit",
-        "system":  "before answering, step-by-step. now answer: prove a simple limit using delta-epsilon; highlight common novice mistakes."
-    },
-    {
-        "id":  "s031",
-        "title":  "infinite regress",
-        "system":  "before answering, step-by-step. now answer: analyze an infinite regress problem and show a stable stopping rule or a contradiction."
-    },
-    {
-        "id":  "s032",
-        "title":  "bayesian decision",
-        "system":  "before answering, step-by-step. now answer: design a bayesian decision rule with 0-1 loss and asymmetric prior; compute the threshold."
-    },
-    {
-        "id":  "s033",
-        "title":  "nash equilibrium",
-        "system":  "before answering, step-by-step. now answer: find a mixed strategy Nash equilibrium in a 2x2 game and justify uniqueness or multiplicity."
-    },
-    {
-        "id":  "s034",
-        "title":  "counterfactual fairness",
-        "system":  "before answering, step-by-step. now answer: test a model for counterfactual fairness and propose remediation steps."
-    },
-    {
-        "id":  "s035",
-        "title":  "proof structure",
-        "system":  "before answering, step-by-step. now answer: restructure a rambling proof into lemmas and a clean final argument; explain choices."
-    },
-    {
-        "id":  "s036",
-        "title":  "set cardinality",
-        "system":  "before answering, step-by-step. now answer: show countability/uncountability of a set using injections/surjections; avoid common errors."
-    },
-    {
-        "id":  "s037",
-        "title":  "reasoning bias",
-        "system":  "before answering, step-by-step. now answer: detect confirmation bias in a given argument and redesign an unbiased evaluation."
-    },
-    {
-        "id":  "s038",
-        "title":  "faulty syllogism",
-        "system":  "before answering, step-by-step. now answer: fix a syllogism with an undistributed middle; present a valid alternative."
-    },
-    {
-        "id":  "s039",
-        "title":  "quantum thought experiment",
-        "system":  "before answering, step-by-step. now answer: analyze a quantum paradox setup and reconcile it with measurement theory."
-    },
-    {
-        "id":  "s040",
-        "title":  "competency mapping",
-        "system":  "before answering, step-by-step. now answer: map competencies for a role and design an assessment that separates reasoning from recall."
-    },
-    {
-        "title":  "factual explanation",
-        "id":  "s041",
-        "system":  "before answering, step-by-step. now answer: explain why the sky appears blue using rayleigh scattering and address common misconceptions."
-    },
-    {
-        "title":  "compare and contrast",
-        "id":  "s042",
-        "system":  "before answering, step-by-step. now answer: compare sql and nosql databases for an analytics workload; derive a recommendation."
-    },
-    {
-        "title":  "pros and cons",
-        "id":  "s043",
-        "system":  "before answering, step-by-step. now answer: list pros/cons of remote-first vs hybrid for a 50-person startup and conclude with a policy."
-    },
-    {
-        "title":  "how-to procedure",
-        "id":  "s044",
-        "system":  "before answering, step-by-step. now answer: outline a safe, reversible database migration procedure for renaming a column in production."
-    },
-    {
-        "title":  "troubleshooting",
-        "id":  "s045",
-        "system":  "before answering, step-by-step. now answer: troubleshoot a laptop that randomly shuts down under load; isolate likely causes and tests."
-    },
-    {
-        "title":  "design a plan",
-        "id":  "s046",
-        "system":  "before answering, step-by-step. now answer: design a 30-day habit plan to learn statistics with spaced repetition and practice."
-    },
-    {
-        "title":  "fermi estimation",
-        "id":  "s047",
-        "system":  "before answering, step-by-step. now answer: estimate the number of piano tuners in a large city; state assumptions and bounds."
-    },
-    {
-        "title":  "summarization",
-        "id":  "s048",
-        "system":  "before answering, step-by-step. now answer: summarize a long report into 5 bullets prioritizing decisions, risks, and next actions."
-    },
-    {
-        "title":  "classification",
-        "id":  "s049",
-        "system":  "before answering, step-by-step. now answer: classify a set of customer feedback into themes and suggest top fixes."
-    },
-    {
-        "title":  "extraction",
-        "id":  "s050",
-        "system":  "before answering, step-by-step. now answer: extract entities (names, dates, amounts) from a contract snippet and present as json."
-    },
-    {
-        "title":  "prioritization",
-        "id":  "s051",
-        "system":  "before answering, step-by-step. now answer: prioritize a backlog of 10 features using impact vs effort; output a ranked list."
-    },
-    {
-        "title":  "argument evaluation",
-        "id":  "s052",
-        "system":  "before answering, step-by-step. now answer: evaluate an argument about renewable energy subsidies; identify assumptions and fallacies."
-    },
-    {
-        "title":  "outline creation",
-        "id":  "s053",
-        "system":  "before answering, step-by-step. now answer: create an outline for a whitepaper on data governance for SMEs."
-    },
-    {
-        "title":  "brainstorming",
-        "id":  "s054",
-        "system":  "before answering, step-by-step. now answer: generate 10 creative onboarding ideas for a fintech app; cluster and choose 3."
-    },
-    {
-        "title":  "constraint satisfaction",
-        "id":  "s055",
-        "system":  "before answering, step-by-step. now answer: assign 5 people to 5 tasks given skill and availability constraints; show reasoning."
-    },
-    {
-        "title":  "scheduling",
-        "id":  "s056",
-        "system":  "before answering, step-by-step. now answer: build a one-week schedule balancing deep work, meetings, and rest given time blocks."
-    },
-    {
-        "title":  "resource allocation",
-        "id":  "s057",
-        "system":  "before answering, step-by-step. now answer: allocate a $100k quarterly budget across infra, product, and marketing; justify split."
-    },
-    {
-        "title":  "risk assessment",
-        "id":  "s058",
-        "system":  "before answering, step-by-step. now answer: assess risks for launching an AI feature; propose mitigations and owners."
-    },
-    {
-        "title":  "cost-benefit analysis",
-        "id":  "s059",
-        "system":  "before answering, step-by-step. now answer: run a cost-benefit for migrating from vendor X to Y over 12 months."
-    },
-    {
-        "title":  "hypothesis test",
-        "id":  "s060",
-        "system":  "before answering, step-by-step. now answer: set up a statistical test to confirm a conversion lift; define alpha, power, and sample size."
-    }
+  {
+    "id": "s001",
+    "title": "paradox resolution",
+    "system": "before answering, work step-by-step: 1) UNDERSTAND the paradox. 2) ANALYZE premises. 3) REASON through implications. 4) SYNTHESIZE consistent resolution. 5) CONCLUDE clearly. now answer: resolve a self-referential sentence without violating logic."
+  },
+  {
+    "id": "s002",
+    "title": "conditional logic chain",
+    "system": "before answering, work step-by-step: 1) UNDERSTAND. 2) ANALYZE. 3) REASON. 4) SYNTHESIZE. 5) CONCLUDE. now answer: determine truth values in a 3-statement dependency where one must be false."
+  },
+  {
+    "id": "s003",
+    "title": "bayes update",
+    "system": "before answering, work step-by-step: 1) UNDERSTAND prior and likelihood. 2) ANALYZE evidence. 3) REASON with bayes. 4) SYNTHESIZE posterior. 5) CONCLUDE. now answer: compute posterior disease risk after two imperfect tests."
+  },
+  {
+    "id": "s004",
+    "title": "proof by contradiction",
+    "system": "before answering, step-by-step. now answer: prove sqrt(2) is irrational; show assumption -> contradiction -> resolution."
+  },
+  {
+    "id": "s005",
+    "title": "induction trap",
+    "system": "before answering, step-by-step. now answer: fix a broken induction proof that 'all horses are the same color' and explain the flaw."
+  },
+  {
+    "id": "s006",
+    "title": "algorithm complexity",
+    "system": "before answering, step-by-step. now answer: derive time complexity of T(n)=3T(n/2)+n log n, justify each term and master-case."
+  },
+  {
+    "id": "s007",
+    "title": "graph reachability",
+    "system": "before answering, step-by-step. now answer: decide if a directed graph with cycles has a path meeting alternating constraints; outline the algorithm and proof idea."
+  },
+  {
+    "id": "s008",
+    "title": "counterfactual causality",
+    "system": "before answering, step-by-step. now answer: analyze whether A caused B in presence of confounder C; propose tests and a decision."
+  },
+  {
+    "id": "s009",
+    "title": "trolley ethics",
+    "system": "before answering, step-by-step. now answer: evaluate trolley variants under utilitarian and deontological lenses; synthesize a policy."
+  },
+  {
+    "id": "s010",
+    "title": "sorites resolution",
+    "system": "before answering, step-by-step. now answer: resolve the heap paradox with a defensible thresholding policy and justify."
+  },
+  {
+    "id": "s011",
+    "title": "russell paradox",
+    "system": "before answering, step-by-step. now answer: explain russell's set paradox and show a resolution via type or separation principles."
+  },
+  {
+    "id": "s012",
+    "title": "quantifier scope",
+    "system": "before answering, step-by-step. now answer: disambiguate 'everyone loves someone' with predicate logic; enumerate readings and implications."
+  },
+  {
+    "id": "s013",
+    "title": "temporal logic bug",
+    "system": "before answering, step-by-step. now answer: verify a safety property in a finite state machine and fix the counterexample trace."
+  },
+  {
+    "id": "s014",
+    "title": "decision theory",
+    "system": "before answering, step-by-step. now answer: choose under uncertainty with asymmetric loss; construct expected utility and justify."
+  },
+  {
+    "id": "s015",
+    "title": "fair division",
+    "system": "before answering, step-by-step. now answer: allocate 3 items among 2 agents fairly with strategyproofness considerations; explain tradeoffs."
+  },
+  {
+    "id": "s016",
+    "title": "infinite series",
+    "system": "before answering, step-by-step. now answer: test convergence of an alternating series with non-monotone tails; choose the correct test and justify."
+  },
+  {
+    "id": "s017",
+    "title": "two-envelope paradox",
+    "system": "before answering, step-by-step. now answer: resolve the two-envelope paradox coherently and explain expectation pitfalls."
+  },
+  {
+    "id": "s018",
+    "title": "geometry construction",
+    "system": "before answering, step-by-step. now answer: construct a perpendicular bisector with compass-straightedge and prove correctness."
+  },
+  {
+    "id": "s019",
+    "title": "matrix eigenvalues",
+    "system": "before answering, step-by-step. now answer: find eigenvalues of a 3x3 with a repeated root; handle defective case and interpret."
+  },
+  {
+    "id": "s020",
+    "title": "recursion invariants",
+    "system": "before answering, step-by-step. now answer: design a recursive algorithm and specify invariants to prove correctness by induction."
+  },
+  {
+    "id": "s021",
+    "title": "counterexample hunt",
+    "system": "before answering, step-by-step. now answer: given a universal claim on reals, construct a minimal counterexample or prove none exists."
+  },
+  {
+    "id": "s022",
+    "title": "nonlinear optimization",
+    "system": "before answering, step-by-step. now answer: optimize a non-convex function with constraints; compare KKT approach vs heuristic search."
+  },
+  {
+    "id": "s023",
+    "title": "causal graphs",
+    "system": "before answering, step-by-step. now answer: decide identifiability of a causal effect from a DAG; show do-calculus or explain why not."
+  },
+  {
+    "id": "s024",
+    "title": "belief revision",
+    "system": "before answering, step-by-step. now answer: revise a belief set after contradictory evidence using minimal change; show the update."
+  },
+  {
+    "id": "s025",
+    "title": "limits of formalism",
+    "system": "before answering, step-by-step. now answer: explain limits of formal systems for arithmetic and practical implications."
+  },
+  {
+    "id": "s026",
+    "title": "quine program",
+    "system": "before answering, step-by-step. now answer: outline a quine (self-reproducing) program and reason about its structure."
+  },
+  {
+    "id": "s027",
+    "title": "ambiguity in language",
+    "system": "before answering, step-by-step. now answer: enumerate structural vs lexical ambiguities in a sentence and propose disambiguation rules."
+  },
+  {
+    "id": "s028",
+    "title": "number theory flaw",
+    "system": "before answering, step-by-step. now answer: find the flaw in a proof that claims 1=0 via modular arithmetic and correct it."
+  },
+  {
+    "id": "s029",
+    "title": "p vs np intuition",
+    "system": "before answering, step-by-step. now answer: compare classes P and NP with reductions intuition and typical pitfalls."
+  },
+  {
+    "id": "s030",
+    "title": "delta-epsilon limit",
+    "system": "before answering, step-by-step. now answer: prove a simple limit using delta-epsilon; highlight common novice mistakes."
+  },
+  {
+    "id": "s031",
+    "title": "infinite regress",
+    "system": "before answering, step-by-step. now answer: analyze an infinite regress problem and show a stable stopping rule or a contradiction."
+  },
+  {
+    "id": "s032",
+    "title": "bayesian decision",
+    "system": "before answering, step-by-step. now answer: design a bayesian decision rule with 0-1 loss and asymmetric prior; compute the threshold."
+  },
+  {
+    "id": "s033",
+    "title": "nash equilibrium",
+    "system": "before answering, step-by-step. now answer: find a mixed strategy Nash equilibrium in a 2x2 game and justify uniqueness or multiplicity."
+  },
+  {
+    "id": "s034",
+    "title": "counterfactual fairness",
+    "system": "before answering, step-by-step. now answer: test a model for counterfactual fairness and propose remediation steps."
+  },
+  {
+    "id": "s035",
+    "title": "proof structure",
+    "system": "before answering, step-by-step. now answer: restructure a rambling proof into lemmas and a clean final argument; explain choices."
+  },
+  {
+    "id": "s036",
+    "title": "set cardinality",
+    "system": "before answering, step-by-step. now answer: show countability/uncountability of a set using injections/surjections; avoid common errors."
+  },
+  {
+    "id": "s037",
+    "title": "reasoning bias",
+    "system": "before answering, step-by-step. now answer: detect confirmation bias in a given argument and redesign an unbiased evaluation."
+  },
+  {
+    "id": "s038",
+    "title": "faulty syllogism",
+    "system": "before answering, step-by-step. now answer: fix a syllogism with an undistributed middle; present a valid alternative."
+  },
+  {
+    "id": "s039",
+    "title": "quantum thought experiment",
+    "system": "before answering, step-by-step. now answer: analyze a quantum paradox setup and reconcile it with measurement theory."
+  },
+  {
+    "id": "s040",
+    "title": "competency mapping",
+    "system": "before answering, step-by-step. now answer: map competencies for a role and design an assessment that separates reasoning from recall."
+  },
+  {
+    "title": "factual explanation",
+    "id": "s041",
+    "system": "before answering, step-by-step. now answer: explain why the sky appears blue using rayleigh scattering and address common misconceptions."
+  },
+  {
+    "title": "compare and contrast",
+    "id": "s042",
+    "system": "before answering, step-by-step. now answer: compare sql and nosql databases for an analytics workload; derive a recommendation."
+  },
+  {
+    "title": "pros and cons",
+    "id": "s043",
+    "system": "before answering, step-by-step. now answer: list pros/cons of remote-first vs hybrid for a 50-person startup and conclude with a policy."
+  },
+  {
+    "title": "how-to procedure",
+    "id": "s044",
+    "system": "before answering, step-by-step. now answer: outline a safe, reversible database migration procedure for renaming a column in production."
+  },
+  {
+    "title": "troubleshooting",
+    "id": "s045",
+    "system": "before answering, step-by-step. now answer: troubleshoot a laptop that randomly shuts down under load; isolate likely causes and tests."
+  },
+  {
+    "title": "design a plan",
+    "id": "s046",
+    "system": "before answering, step-by-step. now answer: design a 30-day habit plan to learn statistics with spaced repetition and practice."
+  },
+  {
+    "title": "fermi estimation",
+    "id": "s047",
+    "system": "before answering, step-by-step. now answer: estimate the number of piano tuners in a large city; state assumptions and bounds."
+  },
+  {
+    "title": "summarization",
+    "id": "s048",
+    "system": "before answering, step-by-step. now answer: summarize a long report into 5 bullets prioritizing decisions, risks, and next actions."
+  },
+  {
+    "title": "classification",
+    "id": "s049",
+    "system": "before answering, step-by-step. now answer: classify a set of customer feedback into themes and suggest top fixes."
+  },
+  {
+    "title": "extraction",
+    "id": "s050",
+    "system": "before answering, step-by-step. now answer: extract entities (names, dates, amounts) from a contract snippet and present as json."
+  },
+  {
+    "title": "prioritization",
+    "id": "s051",
+    "system": "before answering, step-by-step. now answer: prioritize a backlog of 10 features using impact vs effort; output a ranked list."
+  },
+  {
+    "title": "argument evaluation",
+    "id": "s052",
+    "system": "before answering, step-by-step. now answer: evaluate an argument about renewable energy subsidies; identify assumptions and fallacies."
+  },
+  {
+    "title": "outline creation",
+    "id": "s053",
+    "system": "before answering, step-by-step. now answer: create an outline for a whitepaper on data governance for SMEs."
+  },
+  {
+    "title": "brainstorming",
+    "id": "s054",
+    "system": "before answering, step-by-step. now answer: generate 10 creative onboarding ideas for a fintech app; cluster and choose 3."
+  },
+  {
+    "title": "constraint satisfaction",
+    "id": "s055",
+    "system": "before answering, step-by-step. now answer: assign 5 people to 5 tasks given skill and availability constraints; show reasoning."
+  },
+  {
+    "title": "scheduling",
+    "id": "s056",
+    "system": "before answering, step-by-step. now answer: build a one-week schedule balancing deep work, meetings, and rest given time blocks."
+  },
+  {
+    "title": "resource allocation",
+    "id": "s057",
+    "system": "before answering, step-by-step. now answer: allocate a $100k quarterly budget across infra, product, and marketing; justify split."
+  },
+  {
+    "title": "risk assessment",
+    "id": "s058",
+    "system": "before answering, step-by-step. now answer: assess risks for launching an AI feature; propose mitigations and owners."
+  },
+  {
+    "title": "cost-benefit analysis",
+    "id": "s059",
+    "system": "before answering, step-by-step. now answer: run a cost-benefit for migrating from vendor X to Y over 12 months."
+  },
+  {
+    "title": "hypothesis test",
+    "id": "s060",
+    "system": "before answering, step-by-step. now answer: set up a statistical test to confirm a conversion lift; define alpha, power, and sample size."
+  },
+  {
+    "id": "evolved_v1_analytic",
+    "title": "evolved analytic template v1",
+    "system": "Reason step-by-step. Label each step as [Step 1], [Step 2], etc. Show your logical progression. Use numbered, atomic steps and check each step."
+  },
+  {
+    "id": "evolved_v1_reflective",
+    "title": "evolved reflective template v1",
+    "system": "Analyze implications, ethics, and causal outcomes. Use logic trees. Consider multiple perspectives before concluding. Map alternatives; justify the final choice explicitly."
+  },
+  {
+    "id": "evolved_v1_analytic",
+    "title": "evolved analytic template v1",
+    "system": "Reason step-by-step. Label each step as [Step 1], [Step 2], etc. Show your logical progression. Use numbered, atomic steps and check each step."
+  },
+  {
+    "id": "evolved_v1_reflective",
+    "title": "evolved reflective template v1",
+    "system": "Analyze implications, ethics, and causal outcomes. Use logic trees. Consider multiple perspectives before concluding. Map alternatives; justify the final choice explicitly."
+  },
+  {
+    "id": "evolved_v1_analytic",
+    "title": "evolved analytic template v1",
+    "system": "Reason step-by-step. Label each step as [Step 1], [Step 2], etc. Show your logical progression. Use numbered, atomic steps and check each step."
+  },
+  {
+    "id": "evolved_v1_reflective",
+    "title": "evolved reflective template v1",
+    "system": "Analyze implications, ethics, and causal outcomes. Use logic trees. Consider multiple perspectives before concluding. Map alternatives; justify the final choice explicitly."
+  }
 ]

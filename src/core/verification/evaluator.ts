@@ -1,9 +1,10 @@
-import { domain, mode } from "./router"
+import { domain, mode } from "../config/router"
 
 export type evaluation = {
     accuracy: number
     compliance: number
     confidence: number
+    self_consistency?: number
 }
 
 export const evaluate = async (response: string, query: string, reasoning_domain: domain, reasoning_mode: mode): Promise<evaluation> => {
@@ -20,9 +21,9 @@ export const evaluate = async (response: string, query: string, reasoning_domain
 
     compliance = evaluate_compliance(response, reasoning_mode)
 
+    const self_consistency = evaluate_self_consistency(response)
     const confidence = calculate_confidence(accuracy, compliance)
-
-    return { accuracy, compliance, confidence }
+    return { accuracy, compliance, confidence, self_consistency }
 }
 
 const evaluate_math = (response: string, query: string): number => {
@@ -75,4 +76,15 @@ const evaluate_compliance = (response: string, reasoning_mode: mode): number => 
 
 const calculate_confidence = (accuracy: number, compliance: number): number => {
     return 0.6 * accuracy + 0.4 * compliance
+}
+
+const evaluate_self_consistency = (response: string): number => {
+    // Heuristic: penalize contradictions and "not" flips on same subject
+    const text = response.toLowerCase()
+    let score = 1
+    const contradictions = (text.match(/contradict|inconsistent|however, this contradicts|on the other hand/g) || []).length
+    score -= Math.min(contradictions * 0.1, 0.5)
+    // reward explicit checks
+    if (/check|verify|validate/.test(text)) score += 0.05
+    return Math.max(0, Math.min(1, score))
 }

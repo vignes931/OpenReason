@@ -1,119 +1,100 @@
 # configuration examples
 
-## full configuration options
+## full configuration surface
 
 ```typescript
 openreason.init({
-  // required
-  provider: "openai", // openai | anthropic | google | xai
-  apiKey: "sk-...", // your api key
-  model: "gpt-4o", // main model for analytic mode
+  provider: "openai", // openai | anthropic | google | xai | mock
+  apiKey: process.env.OPENAI_API_KEY!,
+  model: "gpt-4o",
 
-  // optional models
-  simpleModel: "gpt-4o-mini", // for reflex mode (simple queries)
-  complexModel: "gpt-4o", // for reflective mode (complex queries)
+  // optional model routing
+  simpleModel: "gpt-4o-mini",
+  complexModel: "gpt-4o",
 
-  // confidence weights (optional)
+  // scoring weights (defaults: logical 0.4, rule 0.4, empathy 0.2)
   weights: {
-    logical: 0.4, // logical coherence weight
-    rule: 0.4, // constitutional rule compliance
-    empathy: 0.2, // empathy alignment
+    logical: 0.5,
+    rule: 0.3,
+    empathy: 0.2,
   },
 
-  // memory system (optional)
+  // memory cache (off by default)
   memory: {
-    enabled: true, // enable hierarchical memory
-    path: "./data/memory.db", // sqlite database path
-    blueprintThresh: 0.85, // prompt performance threshold
-    evolInterval: 100, // evolve prompts every N queries
+    enabled: true,
+    path: "./data/memory.db",
   },
 
-  // performance tuning (optional)
+  // retry policy
   performance: {
-    maxRetries: 3, // max llm retry attempts
-    timeout: 30000, // request timeout in milliseconds
-    caching: true, // enable response caching
+    maxRetries: 4,
+    timeout: 45000,
   },
 });
 ```
 
-## provider examples
-
-### openai
+## provider presets
 
 ```typescript
+// openai
 openreason.init({
   provider: "openai",
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEY!,
   model: "gpt-4o",
   simpleModel: "gpt-4o-mini",
 });
-```
 
-### anthropic
-
-```typescript
+// anthropic
 openreason.init({
   provider: "anthropic",
-  apiKey: process.env.ANTHROPIC_API_KEY,
+  apiKey: process.env.ANTHROPIC_API_KEY!,
   model: "claude-3-5-sonnet-20241022",
   simpleModel: "claude-3-5-haiku-20241022",
 });
-```
 
-### google
-
-```typescript
+// google (gemini)
 openreason.init({
   provider: "google",
-  apiKey: process.env.GOOGLE_API_KEY,
+  apiKey: process.env.GOOGLE_API_KEY!,
   model: "gemini-1.5-pro",
   simpleModel: "gemini-1.5-flash",
 });
-```
 
-### xai
-
-```typescript
+// xai
 openreason.init({
   provider: "xai",
-  apiKey: process.env.XAI_API_KEY,
+  apiKey: process.env.XAI_API_KEY!,
   model: "grok-beta",
 });
 ```
 
-## environment variables
+## environment variable helpers
 
-```bash
-# required
-PROVIDER=openai
+The CLI already loads `.env` files, so the easiest flow is to set keys there.
+
+```env
 OPENAI_API_KEY=sk-...
-OPENREASON_MODERATE_MODEL=gpt-4o
-
-# optional models
+ANTHROPIC_API_KEY=sk-ant-...
+GOOGLE_API_KEY=ya29....
+OPENREASON_MODEL=gpt-4o
 OPENREASON_SIMPLE_MODEL=gpt-4o-mini
 OPENREASON_COMPLEX_MODEL=gpt-4o
-
-# optional weights
-OPENREASON_WEIGHT_LOGICAL=0.4
-OPENREASON_WEIGHT_RULE=0.4
-OPENREASON_WEIGHT_EMPATHY=0.2
-
-# optional memory
-OPENREASON_MEMORY_ENABLED=true
 OPENREASON_MEMORY_PATH=./data/memory.db
-OPENREASON_BLUEPRINT_THRESH=0.85
-OPENREASON_EVOL_INTERVAL=100
-
-# optional performance
-OPENREASON_MAX_RETRIES=3
-OPENREASON_TIMEOUT=30000
-OPENREASON_CACHING=true
 ```
 
-load from environment:
+Then hydrate your config with small wrappers:
 
 ```typescript
-import { load_cfg } from "openreason";
-const cfg = load_cfg();
+openreason.init({
+  provider:
+    (process.env.OPENREASON_PROVIDER as "openai" | "google") || "openai",
+  apiKey: process.env.OPENAI_API_KEY!,
+  model: process.env.OPENREASON_MODEL || "gpt-4o",
+  simpleModel: process.env.OPENREASON_SIMPLE_MODEL,
+  complexModel: process.env.OPENREASON_COMPLEX_MODEL,
+  memory: {
+    enabled: process.env.OPENREASON_MEMORY_PATH !== undefined,
+    path: process.env.OPENREASON_MEMORY_PATH || "./data/memory.db",
+  },
+});
 ```

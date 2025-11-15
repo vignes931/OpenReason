@@ -1,234 +1,70 @@
 # Security Policy
 
-## Supported Versions
+Reasoner operates in environments where prompts, provider keys, and cached traces are sensitive. This document summarizes our support commitments and the controls we expect downstream users to enforce.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.2.x   | :white_check_mark: |
-| < 0.2   | :x:                |
+## Supported versions
 
-## Security Considerations
+| Version | Status                                         |
+| ------- | ---------------------------------------------- |
+| 2.x     | supported with patches                         |
+| 1.x     | best-effort (security fixes may be backported) |
+| < 1.0   | unsupported                                    |
 
-### 1. API Key Management
+## Reporting vulnerabilities
 
-**Critical**: Never commit API keys to version control.
+- Email `security@nullure.ai` (PGP available on request); avoid public issues for fresh findings.
+- Include reproduction steps, impact, and suggested mitigations if known.
+- Acknowledgment within 48h, triage within 7 days, coordinated disclosure for critical fixes within 30 days when feasible.
 
-- Store keys in `.env` file (gitignored)
-- Use environment variables in production
-- Rotate keys regularly
-- Use separate keys for dev/staging/prod
+## Secrets and configuration
 
-```bash
-# .env
-OPENAI_API_KEY=sk-...
-ANTHROPIC_API_KEY=sk-ant-...
-GOOGLE_API_KEY=...
-XAI_API_KEY=...
-```
+- API keys must live in env vars or secret stores. Never commit `.env` files or copy keys into docs, fixtures, or tests.
+- `reasonbench/runner.ts` no longer ships fallback keys—set `BENCH_API_KEY` or provider-specific envs before running live benches.
+- Rotate provider keys regularly and use scoped keys per environment (dev/stage/prod).
 
-### 2. Input Validation
+## Input and output handling
 
-OpenReason implements multiple security layers:
+- `classify_query` enforces length limits; keep upstream gateways capped at 10k characters.
+- Treat all user prompts as hostile. Apply your own validation before calling `openreason.reason` if operating in a multi-tenant setting.
+- The verifier pipeline (`verify_math_reasoning`, `verify_logic_consistency`, critic prompts) reduces injection risk but does not eliminate it. Use structured output contracts (JSON schemas) in your integrations when possible.
 
-**Safety Filter** (`sentience_filter.ts`)
+## Memory + persistence
 
-- Blocks harmful content requests
-- Filters personal information extraction
-- Prevents illegal activity instructions
-- Detects manipulation attempts
+- Memory uses Keyv + SQLite stored at `./data/memory.db` by default. The file is local-only; set `memory.enabled=false` when handling regulated data unless you manage storage encryption yourself.
+- To purge traces run `rm ./data/memory.db`. Consider putting the file on encrypted volumes when deploying to shared hosts.
 
-**Query Sanitization**
+## Dependencies and runtime
 
-- Maximum query length: 10,000 characters
-- Unicode normalization
-- SQL injection prevention (if using custom DB queries)
-- No arbitrary code execution
+- Run `npm audit` or `npm audit --production` before releases.
+- Keep Node.js ≥ 18.18 LTS; older runtimes miss TLS updates required by some providers.
+- Use lockfiles to avoid accidental upgrades of LangChain/provider SDKs.
 
-### 3. Output Sanitization
+## Production hardening checklist
 
-**Constraint Engine** validates all LLM outputs:
+- [ ] Configure HTTPS termination and CORS/CSRF policies when exposing Reasoner via HTTP APIs.
+- [ ] Apply rate limiting (`rate-limiter-flexible`, API gateway quotas, etc.).
+- [ ] Collect redactable logs (never print prompts with secrets). Prefer structured logs with trace IDs.
+- [ ] Mask stack traces in user-facing responses; use `log_error` for internal diagnostics.
+- [ ] Monitor constraint violations and verifier failures; these often signal attempted prompt injections.
+- [ ] Schedule backups for memory DBs or disable memory entirely in shared deployments.
 
-- No contradictory statements
-- Evidence-based reasoning required
-- Confidence calibration enforced
-- No circular reasoning allowed
+## Third-party providers
 
-### 4. Rate Limiting
+- Reasoner forwards prompts to whichever provider you select. Their retention policies apply; enable “no training” flags where supported (OpenAI/Anthropic optional parameters, Gemini data controls, etc.).
+- For maximum privacy, substitute provider SDKs that target self-hosted models; ensure the interface matches the subset used by `src/api/provider.ts`.
 
-Implement rate limiting in production:
+## Known limitations
 
-```typescript
-// Recommended: Use rate-limiter-flexible
-import { RateLimiterMemory } from "rate-limiter-flexible";
+1. **No built-in auth** – secure your API surface area separately.
+2. **Local memory only** – scaling beyond a single host requires managed Keyv or other storage layers you control.
+3. **Prompt injection defenses are heuristic** – deterministic guarantees require custom allow-lists and output schemas.
+4. **Benchmark runner** assumes trusted environments; it will exit when no keys are present rather than faking results.
 
-const rateLimiter = new RateLimiterMemory({
-  points: 100, // Number of requests
-  duration: 60, // Per 60 seconds
-});
-```
+## Roadmap items
 
-### 5. Data Privacy
+- Encrypted memory adapter (Keyv + sqlite cipher or libsql).
+- Provider-specific “safe prompt” templates and automated red-team suites.
+- Built-in rate limiter + circuit breaker middleware.
+- Optional audit log streamer with hash chaining.
 
-**Memory System**
-
-- All data stored locally in `./data/ucr_memory.db`
-- No data transmitted to third parties (except LLM providers)
-- Episodic memory can be cleared: `rm ./data/ucr_memory.db`
-- No PII collection by default
-
-**LLM Provider Data**
-
-- Queries sent to OpenAI/Anthropic/Google/XAI
-- Subject to each provider's data retention policies
-- Use provider's data privacy APIs for sensitive applications
-- Consider self-hosted models for maximum privacy
-
-### 6. Prompt Injection Prevention
-
-OpenReason includes built-in prompt injection defenses:
-
-```typescript
-// Constitutional constraints prevent manipulation
-const constraints = [
-  "no contradictions",
-  "evidence required",
-  "no manipulation",
-];
-```
-
-**Best Practices**:
-
-- Validate user input before reasoning
-- Use structured output formats
-- Monitor constraint violations
-- Log suspicious queries
-
-### 7. Dependency Security
-
-**Regular Updates**
-
-```bash
-# Check for vulnerabilities
-npm audit
-
-# Update dependencies
-npm update
-
-# Check for outdated packages
-npm outdated
-```
-
-**Current Dependencies**:
-
-- `@langchain/*` - Actively maintained
-- `@anthropic-ai/sdk` - Official SDK
-- `keyv` - Minimal attack surface
-- All packages audited for known CVEs
-
-### 8. Database Security
-
-**SQLite via Keyv**:
-
-- Local file storage only
-- No network exposure
-- WAL mode for consistency
-- Regular backups recommended
-
-```bash
-# Backup database
-cp ./data/openreason_memory.db ./backups/openreason_memory_$(date +%Y%m%d).db
-```
-
-### 9. Error Handling
-
-**Never expose**:
-
-- API keys in error messages
-- Internal file paths
-- Stack traces to end users
-- Database structure details
-
-```typescript
-// Good
-return { verdict: "error: request failed", conf: 0 };
-
-// Bad
-return { verdict: `error: ${err.stack}`, conf: 0 };
-```
-
-### 10. Production Deployment
-
-**Checklist**:
-
-- [ ] Environment variables configured
-- [ ] Rate limiting enabled
-- [ ] Input validation active
-- [ ] Error logging configured (without sensitive data)
-- [ ] HTTPS enforced
-- [ ] CORS properly configured
-- [ ] Security headers set
-- [ ] Regular backups scheduled
-
-## Reporting a Vulnerability
-
-**Please do not open public issues for security vulnerabilities.**
-
-Email security concerns to: `[your-security-email]`
-
-Include:
-
-1. Description of vulnerability
-2. Steps to reproduce
-3. Potential impact
-4. Suggested fix (if available)
-
-**Response Timeline**:
-
-- Acknowledgment: 48 hours
-- Initial assessment: 7 days
-- Fix deployment: 30 days (for critical issues)
-
-## Security Best Practices for Users
-
-1. **API Keys**: Use separate keys for different environments
-2. **Monitoring**: Log all reasoning requests and constraint violations
-3. **Auditing**: Review episodic memory periodically
-4. **Updates**: Keep OpenReason and dependencies up to date
-5. **Testing**: Run security tests before production deployment
-6. **Backups**: Regular database backups
-7. **Access Control**: Implement authentication for public-facing deployments
-8. **Resource Limits**: Set max tokens, timeouts, and query lengths
-
-## Known Limitations
-
-1. **No built-in authentication** - Implement in your application layer
-2. **Local database** - Not suitable for distributed systems without modification
-3. **LLM provider trust** - Queries sent to third-party APIs
-4. **Memory persistence** - Sensitive queries stored locally
-
-## Compliance
-
-OpenReason can be configured for compliance with:
-
-- GDPR (data minimization, right to erasure)
-- HIPAA (with proper safeguards and BAAs with providers)
-- SOC 2 (logging, access controls)
-- CCPA (data privacy, opt-out mechanisms)
-
-**Note**: Compliance is user's responsibility. OpenReason provides tools but does not guarantee compliance.
-
-## Security Roadmap
-
-- [ ] Built-in rate limiting
-- [ ] Encrypted database option
-- [ ] PII detection and redaction
-- [ ] Audit logging framework
-- [ ] Security test suite
-- [ ] Input sanitization library
-- [ ] Output content filtering
-- [ ] Self-hosted model support
-
----
-
-**Last Updated**: November 14, 2025  
-**Version**: 0.2.0
+_Last updated: 15 Nov 2025_

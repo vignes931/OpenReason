@@ -1,102 +1,64 @@
 import openreason from "openreason";
 
-// example 1: openai configuration
-async function openaiExample() {
-    openreason.init({
+type ProviderConfig = {
+    provider: "openai" | "anthropic" | "google" | "xai"
+    apiKey: string
+    model: string
+    simpleModel?: string
+    complexModel?: string
+};
+
+const missingKey = (name: string) => {
+    console.warn(`Skipping ${name} example because the API key is not set.`);
+};
+
+async function runExample(label: string, cfg: ProviderConfig, query: string) {
+    if (!cfg.apiKey) {
+        missingKey(label);
+        return;
+    }
+    console.log(`\n=== ${label} ===`);
+    openreason.init(cfg);
+    const result = await openreason.reason(query);
+    console.log({ verdict: result.verdict, confidence: result.confidence, mode: result.mode, latency: result.latency, domain: result.domain });
+}
+
+async function main() {
+    await runExample("openai", {
         provider: "openai",
-        apiKey: process.env.OPENAI_API_KEY!,
+        apiKey: process.env.OPENAI_API_KEY || "",
         model: "gpt-4o",
         simpleModel: "gpt-4o-mini",
-        complexModel: "gpt-4o",
-    });
+        complexModel: "gpt-4o"
+    }, "explain quantum entanglement");
 
-    const result = await openreason.reason("explain quantum entanglement");
-    console.log("openai result:", result.verdict);
-    console.log("model used:", result.model_used);
-}
-
-// example 2: anthropic configuration
-async function anthropicExample() {
-    openreason.init({
+    await runExample("anthropic", {
         provider: "anthropic",
-        apiKey: process.env.ANTHROPIC_API_KEY!,
+        apiKey: process.env.ANTHROPIC_API_KEY || "",
         model: "claude-3-5-sonnet-20241022",
-        simpleModel: "claude-3-5-haiku-20241022",
-    });
+        simpleModel: "claude-3-5-haiku-20241022"
+    }, "what is consciousness?");
 
-    const result = await openreason.reason("what is consciousness?");
-    console.log("anthropic result:", result.verdict);
-    console.log("confidence:", result.confidence);
-}
-
-// example 3: google gemini configuration
-async function googleExample() {
-    openreason.init({
+    await runExample("google", {
         provider: "google",
-        apiKey: process.env.GOOGLE_API_KEY!,
+        apiKey: process.env.GOOGLE_API_KEY || "",
         model: "gemini-1.5-pro",
-        simpleModel: "gemini-1.5-flash",
-    });
+        simpleModel: "gemini-1.5-flash"
+    }, "summarize the theory of relativity");
 
-    const result = await openreason.reason(
-        "summarize the theory of relativity"
-    );
-    console.log("google result:", result.verdict);
-    console.log("mode:", result.mode);
-}
-
-// example 4: xai configuration
-async function xaiExample() {
-    openreason.init({
-        provider: "xai",
-        apiKey: process.env.XAI_API_KEY!,
-        model: "grok-beta",
-    });
-
-    const result = await openreason.reason("explain machine learning");
-    console.log("xai result:", result.verdict);
-}
-
-// example 5: switching providers dynamically
-async function dynamicProviderExample() {
-    const query = "what is the meaning of life?";
-
-    // try with openai
-    openreason.init({
-        provider: "openai",
-        apiKey: process.env.OPENAI_API_KEY!,
-        model: "gpt-4o",
-    });
-    const openaiResult = await openreason.reason(query);
-    console.log("openai answer:", openaiResult.verdict);
-
-    // switch to anthropic
-    openreason.init({
-        provider: "anthropic",
-        apiKey: process.env.ANTHROPIC_API_KEY!,
-        model: "claude-3-5-sonnet-20241022",
-    });
-    const anthropicResult = await openreason.reason(query);
-    console.log("anthropic answer:", anthropicResult.verdict);
-
-    // compare confidence scores
-    console.log("openai confidence:", openaiResult.confidence);
-    console.log("anthropic confidence:", anthropicResult.confidence);
-}
-
-// run examples
-async function main() {
-    console.log("\n=== openai example ===");
-    await openaiExample();
-
-    console.log("\n=== anthropic example ===");
-    await anthropicExample();
-
-    console.log("\n=== google example ===");
-    await googleExample();
-
-    console.log("\n=== dynamic provider switching ===");
-    await dynamicProviderExample();
+    const openaiQuery = "what is the meaning of life?";
+    const openaiKey = process.env.OPENAI_API_KEY || "";
+    const anthropicKey = process.env.ANTHROPIC_API_KEY || "";
+    if (openaiKey && anthropicKey) {
+        console.log("\n=== dynamic provider switching ===");
+        openreason.init({ provider: "openai", apiKey: openaiKey, model: "gpt-4o" });
+        const openaiResult = await openreason.reason(openaiQuery);
+        openreason.init({ provider: "anthropic", apiKey: anthropicKey, model: "claude-3-5-sonnet-20241022" });
+        const anthropicResult = await openreason.reason(openaiQuery);
+        console.log({ openai: openaiResult.confidence, anthropic: anthropicResult.confidence });
+    } else {
+        console.warn("Skipping dynamic provider comparison because both OPENAI_API_KEY and ANTHROPIC_API_KEY are required.");
+    }
 }
 
 main().catch(console.error);

@@ -1,8 +1,8 @@
-import { loadMemory } from "./memory"
-import { reason } from "./reason"
+import { load_memory } from "../utils/memory"
+import { reason } from "../pipeline/reason"
 
 export type openreason_config = {
-    provider: "openai" | "anthropic" | "google" | "xai"
+    provider: "openai" | "anthropic" | "google" | "xai" | "mock"
     apiKey: string
     model: string
     simpleModel?: string
@@ -28,6 +28,8 @@ let cfg: openreason_config = {
     model: "gpt-4o"
 }
 
+let explicitInit = false
+
 export const init = (config: openreason_config) => {
     cfg = {
         ...config,
@@ -37,18 +39,25 @@ export const init = (config: openreason_config) => {
         memory: config.memory || { enabled: false, path: "./data/memory.db" },
         performance: config.performance || { maxRetries: 3, timeout: 30000 }
     }
-
     if (cfg.memory?.enabled) {
-        // fire-and-forget async initialization
-        Promise.resolve(loadMemory(cfg.memory.path)).catch(() => { })
+        Promise.resolve(load_memory(cfg.memory.path)).catch(() => { })
     }
+    explicitInit = true
 }
 
 export const get_config = () => cfg
 
+const ensure_initialized = () => {
+    if (!explicitInit) {
+        throw new Error("OpenReason has not been initialized. Call openreason.init({...}) before invoking reason().")
+    }
+}
+
 export default {
     init,
+    get_config,
     async reason(query: string) {
-        return await reason(query, cfg)
+        ensure_initialized()
+        return reason(query, cfg)
     }
 }

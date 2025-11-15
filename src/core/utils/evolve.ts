@@ -9,8 +9,10 @@ let performance_history: performance_metrics[] = []
 
 const alpha = 0.4
 const beta = 0.3
-const gamma = 0.0001
-const theta = 0.3
+const gamma = 0.001
+const theta = 0.1
+
+import { mutate_prompts } from "./prompt"
 
 export const evolve_prompt = async (metrics: performance_metrics): Promise<number> => {
     performance_history.push(metrics)
@@ -28,6 +30,8 @@ export const evolve_prompt = async (metrics: performance_metrics): Promise<numbe
 
     if (delta > theta) {
         evolution_counter++
+        // mutate prompt templates based on recent averages
+        mutate_prompts({ accuracy: avg_accuracy, compliance: avg_compliance, latency: avg_latency })
         performance_history = []
         return evolution_counter
     }
